@@ -1105,7 +1105,7 @@ body::after {
     0 20px 45px rgba(0,0,0,0.28),
     inset 0 0 15px rgba(255,255,255,0.6);
   overflow: hidden;
-  animation: abrirCarta 0.15s ease;
+  animation: abrirCarta 0.6s cubic-bezier(.22,1,.36,1);
   border: 1px solid rgba(255,255,255,0.7);
 }
 
@@ -1134,16 +1134,16 @@ body::after {
   animation: brilloCarta 4s linear infinite;
 }
 
-/* 📝 Texto */
+/* 📝 TEXTO (AHORA NEGRO REAL) */
 .carta h1 {
   font-size: clamp(1.4rem, 4vw, 2rem);
-  color: #1d1d1dc5;
+  color: #111; /* 🔥 negro real */
   margin-bottom: 25px;
   line-height: 1.35;
   animation: flotarTexto 2.5s ease-in-out infinite alternate;
 }
 
-/* 🎀 Botones */
+/* 🎀 BOTONES */
 .botones {
   display: flex;
   justify-content: center;
@@ -1164,14 +1164,16 @@ button {
   box-shadow: 0 8px 18px rgba(12,79,117,0.28);
 }
 
+/* ❌ quitamos bug de doble click */
+button:active {
+  transform: scale(0.95); /* antes tenías 0.45 💀 */
+}
+
+/* hover */
 button:hover {
   transform: translateY(-3px) scale(1.05);
   background: linear-gradient(135deg, #1c7aa3, #28a3d6);
   box-shadow: 0 12px 22px rgba(12,79,117,0.35);
-}
-
-button:active {
-  transform: scale(0.45);
 }
 
 /* 📱 Celular */
@@ -1190,33 +1192,39 @@ button:active {
   }
 }
 
-/* ✨ Animaciones */
+/* ✨ ANIMACIÓN LIMPIA (YA NO ROMPE NADA) */
 @keyframes abrirCarta {
-  from {
-    transform: scale(0.65) translateY(30px) rotateX(70deg);
+  0% {
+    transform: translateY(40px) scale(0.9);
     opacity: 0;
+    filter: blur(6px);
   }
-  to {
-    transform: scale(0.45) translateY(0) rotateX(0);
-    opacity: 0;
+
+  60% {
+    transform: translateY(-5px) scale(1.02);
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1; /* 🔥 importante */
+    filter: blur(0);
   }
 }
 
+/* ✨ brillo */
 @keyframes brilloCarta {
   0%   { left: -45%; opacity: 0; }
   20%  { opacity: 1; }
   100% { left: 130%; opacity: 0; }
 }
 
+/* ✨ flotación */
 @keyframes flotarTexto {
   from { transform: translateY(0); }
   to   { transform: translateY(-4px); }
 }
-
-button:hover {
-  background: #14627a;
-}
-
 /* 🙈 ocultar flores al inicio */
 .oculto {
   display: none;
@@ -1517,16 +1525,13 @@ body {
   100% { opacity: 0.7; }
 }
 
-/* 🎵 Botón música flotante */
-.music-player {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1200;
-}
-
-/* botón */
+/* 🎵 botón abajo derecha */
 #musicBtn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+
   width: 58px;
   height: 58px;
   border: none;
@@ -1534,41 +1539,64 @@ body {
   cursor: pointer;
   font-size: 24px;
   color: white;
+
   background: linear-gradient(135deg, #ff5fa2, #7c5cff);
   box-shadow: 0 8px 22px rgba(0,0,0,0.28);
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
 }
 
-/* hover pc */
+/* 🖱 hover pc */
 #musicBtn:hover {
-  transform: scale(1.08) rotate(8deg);
+  transform: scale(1.08);
   box-shadow: 0 12px 28px rgba(0,0,0,0.35);
 }
 
-/* cuando reproduce */
+/* ▶️ cuando reproduce */
 #musicBtn.playing {
   animation: latido 1s infinite;
   background: linear-gradient(135deg, #00c9a7, #00e1ff);
 }
 
-/* celular */
+/* 📱 celular */
 @media (max-width: 768px) {
-  .music-player {
-    top: 14px;
-    right: 14px;
-  }
-
   #musicBtn {
+    right: 14px;
+    bottom: 14px;
     width: 52px;
     height: 52px;
     font-size: 22px;
   }
 }
 
+
 /* animación */
 @keyframes latido {
   0% { transform: scale(1); }
   50% { transform: scale(1.12); }
   100% { transform: scale(1); }
+}
+/* 🌸 Tipografías generales */
+body{
+  font-family: 'Poppins', sans-serif;
+}
+
+.greeting-message,
+.carta h1{
+  font-family: 'Great Vibes', cursive;
+}
+
+/* 💖 Lluvia de palabras con letra elegante y legible */
+.palabra{
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+/* 📱 En móvil sigue limpia */
+@media (max-width: 768px){
+  .palabra{
+    font-weight: 600;
+    letter-spacing: 0.4px;
+  }
 }
