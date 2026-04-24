@@ -83,15 +83,24 @@ function iniciarEventos() {
 }
 // 🌧 lluvia de palabras
 const palabras = [
-  "Buenas Dormilon ❤️",
-  "Te quiero muchoo 💕",
-  "Eres genial ✨",
-  "Tu = Bonito 😊",
-  "Lele ❤️",
-  "Espero la pasese super🌸",
-  "Coma muchoo💖",
-  "Eres el mejor",
-  "Eres Maravilloso"
+   "Buenas, dormilón ❤️",
+  "Te quiero mucho 💕",
+  "Eres increíble ✨",
+  "Tú = bonito 😊",
+  "Leo ❤️",
+  "Espero que la pases súper 🌸",
+  "Come mucho 💖",
+  "Eres el mejor 🌟",
+  "Eres maravilloso 💫",
+  "Siempre sacas sonrisas 😊",
+  "Qué bonito eres 💕",
+  "Hoy brillas más que nunca ✨",
+  "Mereces lo mejor 💖",
+  "Eres muy especial 🌷",
+  "Tu sonrisa encanta ❤️",
+  "Disfruta tu día 🎂",
+  "Qué lindo coincidir contigo 💫",
+  "Hoy todo florece para ti 🌸"
 ];
 
 function iniciarLluvia() {
@@ -165,9 +174,28 @@ function lanzarCorazones() {
   corazon.style.left = Math.random() * 100 + "vw";
 
   // duración
-  corazon.style.animationDuration = (2 + Math.random() * 3) + "s";
-
+corazon.style.animationDuration = (3 + Math.random() * 2) + "s";
   container.appendChild(corazon);
 
   setTimeout(() => corazon.remove(), 7000);
+  corazon.style.zIndex = "998";
 }
+// 🎵 Música botón flotante
+const musica = document.getElementById("musica");
+const musicBtn = document.getElementById("musicBtn");
+
+musicBtn.addEventListener("click", async () => {
+  if (musica.paused) {
+    try {
+      await musica.play();
+      musicBtn.innerHTML = "❚❚";
+      musicBtn.classList.add("playing");
+    } catch (error) {
+      alert("No se pudo reproducir la canción");
+    }
+  } else {
+    musica.pause();
+    musicBtn.innerHTML = "▶";
+    musicBtn.classList.remove("playing");
+  }
+});

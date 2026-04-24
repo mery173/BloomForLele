@@ -33,21 +33,20 @@ body {
 
 .flowers {
   position: relative;
-  transform: scale(0.7);
 }
 
 .flower {
   position: absolute;
-  bottom: 10vmin;
+  bottom: 5vmin;
   transform-origin: bottom center;
-  z-index: 10;
+  z-index: 3;
   --fl-speed: 0.5s;
 }
 .flower--1 {
   animation: moving-flower-1 4s linear infinite;
 }
 .flower--1 .flower__line {
-  height: 80vmin;
+  height: 65vmin;
   animation-delay: 0.3s;
 }
 .flower--1 .flower__line__leaf--1 {
@@ -74,7 +73,7 @@ body {
   animation: moving-flower-2 4s linear infinite;
 }
 .flower--2 .flower__line {
-  height: 60vmin;
+  height: 50vmin;
   animation-delay: 0.8s;
 }
 .flower--2 .flower__line__leaf--1 {
@@ -1053,93 +1052,165 @@ button {
 button:hover {
   background: #69f5ff;
 }
-/* 💌 Fondo oscuro mientras aparece la carta */
+/* 💌 Fondo elegante */
 body {
   margin: 0;
   padding: 0;
-  background: #0c0c1d;
+  background:
+    radial-gradient(circle at top, #1a2440 0%, #0c0c1d 45%, #050510 100%);
   font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
 }
 
-/* 💌 Carta contenedor */
+/* ✨ Capa brillo suave */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: fondoBrillo 5s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes fondoBrillo {
+  from { opacity: 0.25; }
+  to   { opacity: 0.5; }
+}
+
+/* 💌 Contenedor carta */
 .carta {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(1px);
   z-index: 999;
+  padding: 20px;
 }
 
-/* 💌 Papel de carta */
+/* 💖 Carta principal */
 .carta-contenido {
   position: relative;
-  width: 320px;
-  padding: 40px 20px;
-  background: #fffaf3;
-  border-radius: 10px;
+  width: min(92%, 390px);
+  padding: 75px 28px 35px;
+  background: linear-gradient(145deg, #fffaf3, #ffeef7);
+  border-radius: 22px;
   text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-  animation: abrirCarta 0.8s ease;
+  box-shadow:
+    0 20px 45px rgba(0,0,0,0.28),
+    inset 0 0 15px rgba(255,255,255,0.6);
+  overflow: hidden;
+  animation: abrirCarta 0.15s ease;
+  border: 1px solid rgba(255,255,255,0.7);
 }
 
-/* ✨ animación suave */
-@keyframes abrirCarta {
-  from {
-    transform: scale(0.5) rotateX(90deg);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) rotateX(0);
-    opacity: 1;
-  }
-}
-
-.carta-contenido {
-  position: relative;
-  width: 350px;
-  padding: 55px 30px 40px; /* más espacio arriba */
-  background: #fffaf3;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 15px 40px rgba(1, 3, 12, 0.3);
-  overflow: hidden; /* 🔥 clave para que no se salga */
-}
- 
-/* 💌 tapa del sobre (AHORA ADENTRO) */
+/* 💌 Parte superior tipo sobre */
 .carta-contenido::before {
   content: "";
   position: absolute;
-  top: 0; /* 🔥 ya no está afuera */
+  top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
-  background: #166579;
-
-  /* triángulo invertido hacia abajo */
+  height: 75px;
+  background: linear-gradient(135deg, #214f8a, #0c4f75);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
-/* 💌 botones */
+/* ✨ Destello */
+.carta-contenido::after {
+  content: "";
+  position: absolute;
+  top: -120%;
+  left: -30%;
+  width: 60%;
+  height: 250%;
+  background: rgba(255,255,255,0.18);
+  transform: rotate(25deg);
+  animation: brilloCarta 4s linear infinite;
+}
+
+/* 📝 Texto */
+.carta h1 {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: #1d1d1dc5;
+  margin-bottom: 25px;
+  line-height: 1.35;
+  animation: flotarTexto 2.5s ease-in-out infinite alternate;
+}
+
+/* 🎀 Botones */
 .botones {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 button {
-  padding: 10px 18px;
+  padding: 12px 22px;
   border: none;
-  border-radius: 20px;
-  background: #0c4f75;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0c4f75, #1c7aa3);
   color: white;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.25s ease;
+  box-shadow: 0 8px 18px rgba(12,79,117,0.28);
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(135deg, #1c7aa3, #28a3d6);
+  box-shadow: 0 12px 22px rgba(12,79,117,0.35);
+}
+
+button:active {
+  transform: scale(0.45);
+}
+
+/* 📱 Celular */
+@media (max-width: 480px) {
+  .carta-contenido {
+    padding: 68px 20px 28px;
+    border-radius: 18px;
+  }
+
+  .botones {
+    gap: 10px;
+  }
+
+  button {
+    width: 120px;
+  }
+}
+
+/* ✨ Animaciones */
+@keyframes abrirCarta {
+  from {
+    transform: scale(0.65) translateY(30px) rotateX(70deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(0.45) translateY(0) rotateX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes brilloCarta {
+  0%   { left: -45%; opacity: 0; }
+  20%  { opacity: 1; }
+  100% { left: 130%; opacity: 0; }
+}
+
+@keyframes flotarTexto {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-4px); }
 }
 
 button:hover {
@@ -1150,33 +1221,68 @@ button:hover {
 .oculto {
   display: none;
 }
-/* 🌧 contenedor de palabras */
+/* 🌧 Contenedor lluvia de palabras */
 #lluvia-palabras {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* no molesta clicks */
+  pointer-events: none;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
 }
 
-/* 💖 cada palabra */
+/* 💖 Cada palabra */
 .palabra {
   position: absolute;
-  top: -20px;
-  color: #e6e3e3;
-  font-size: 18px;
-  animation: caer linear forwards;
-  opacity: 0.8;
+  top: -40px;
+  left: 0;
+  color: rgba(255,255,255,0.92);
+  font-size: clamp(14px, 2vw, 22px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.18),
+    0 0 14px rgba(255,170,220,0.12);
+
+  opacity: 0;
+  animation: caerPalabra linear forwards;
 }
 
-/* animación de caída */
-@keyframes caer {
-  to {
-    transform: translateY(80vh);
+/* ✨ Lluvia elegante */
+@keyframes caerPalabra {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(-4deg) scale(0.9);
     opacity: 0;
+  }
+
+  12% {
+    opacity: 0.95;
+  }
+
+  35% {
+    transform: translateY(30vh) translateX(8px) rotate(2deg) scale(1);
+  }
+
+  65% {
+    transform: translateY(60vh) translateX(-10px) rotate(-2deg) scale(1.03);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translateY(105vh) translateX(6px) rotate(4deg) scale(0.95);
+    opacity: 0;
+  }
+}
+
+/* 📱 Celulares */
+@media (max-width: 768px) {
+  .palabra {
+    font-size: clamp(13px, 3vw, 18px);
+    font-weight: 600;
   }
 }
 
@@ -1195,45 +1301,81 @@ body {
   height: 100%;
   pointer-events: none;
   overflow: hidden;
-  z-index: 53; /* encima de flores pero debajo de la carta */
+  z-index: 33;
 }
 
+/* 🎉 Confeti fino y sutil */
 .confeti {
   position: absolute;
-  width: 6px;
-  height: 9px;
-  opacity: 0.9;
+  width: 4px;
+  height: 10px;
+  border-radius: 2px;
+  opacity: 0.55;
+  box-shadow: 0 0 4px rgba(255,255,255,0.15);
   animation: caerConfeti linear forwards;
 }
 
+/* ✨ Caída suave */
 @keyframes caerConfeti {
   0% {
-    transform: translateY(-10vh) rotate(0deg);
-  }
-  100% {
-    transform: translateY(100vh) rotate(720deg);
+    transform: translateY(-10vh) rotate(0deg) scale(0.9);
     opacity: 0;
   }
-} 
+
+  15% {
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translateY(50vh) rotate(240deg) scale(1);
+  }
+
+  100% {
+    transform: translateY(105vh) rotate(540deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
 #corazones-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 2;
+  z-index: 998; /* debajo carta (999), arriba fondo */
 }
 
-.corazon {
+.corazon{
   position: absolute;
-  bottom: -60px;
-  font-size: 40px;
+  bottom: -50px;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1;
   opacity: 0;
+  filter:
+    drop-shadow(0 0 4px rgba(255,255,255,.55))
+    drop-shadow(0 0 10px rgba(255,60,120,.45));
   animation: subirCorazon linear forwards;
+  will-change: transform, opacity;
 }
+@keyframes subirCorazon {
+  0%{
+    transform: translateY(0) scale(.7) rotate(0deg);
+    opacity: 0;
+  }
 
+  10%{
+    opacity: .95;
+  }
+
+  50%{
+    opacity: 1;
+    transform: translateY(-45vh) translateX(10px) scale(1) rotate(8deg);
+  }
+
+  100%{
+    transform: translateY(-110vh) translateX(-12px) scale(1.4) rotate(-10deg);
+    opacity: 0;
+  }
+}
 @keyframes subirCorazon {
   0% {
     transform: translateY(0) scale(0.5);
@@ -1259,4 +1401,174 @@ body {
 }
 #btnNo {
   touch-action: none;
+}
+
+/* 💖 Mensaje principal */
+.greeting-message {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92%, 750px);
+  text-align: center;
+  z-index: 1000;
+  font-family: 'Segoe UI', sans-serif;
+  color: rgba(253, 254, 255, 0.986);
+  line-height: 1.5;
+  padding: 0 12px;
+
+  animation: aparecerSuave 2s ease forwards;
+}
+
+/* Primera parte */
+.greeting-message {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Happy Birthday Leo */
+.greeting-message strong {
+  display: block;
+  margin-top: 10px;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: #599ce7;
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.45),
+    0 0 22px rgba(255,150,220,0.35);
+  animation: brilloTexto 2.8s ease-in-out infinite alternate;
+}
+
+/* 📱 Celulares */
+@media (max-width: 768px) {
+  .greeting-message {
+    top: 28px;
+    width: 94%;
+    line-height: 1.4;
+  }
+
+  .greeting-message strong {
+    margin-top: 8px;
+  }
+}
+
+/* 📲 Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .greeting-message {
+    top: 35px;
+  }
+}
+
+/* ✨ Entrada elegante */
+@keyframes aparecerSuave {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-35px) scale(0.95);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* 💫 Brillo suave */
+@keyframes brilloTexto {
+  0% {
+    transform: scale(1);
+    letter-spacing: 0px;
+  }
+  100% {
+    transform: scale(1.03);
+    letter-spacing: 1px;
+  }
+}
+/* ✨ Estrellas solo en pantalla de flores */
+#contenido::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 3px),
+    radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 3px),
+    radial-gradient(circle, rgba(255,220,255,0.8) 1px, transparent 3px);
+
+  background-size: 120px 120px, 180px 180px, 250px 250px;
+  background-position: 0 0, 50px 70px, 90px 40px;
+
+  animation: titilarEstrellas 3s infinite alternate;
+  opacity: 0.8;
+}
+
+/* ✨ Brillo */
+@keyframes titilarEstrellas {
+  0%   { opacity: 0.25; }
+  25%  { opacity: 0.6; }
+  50%  { opacity: 0.9; }
+  75%  { opacity: 0.35; }
+  100% { opacity: 0.7; }
+}
+
+/* 🎵 Botón música flotante */
+.music-player {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1200;
+}
+
+/* botón */
+#musicBtn {
+  width: 58px;
+  height: 58px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  background: linear-gradient(135deg, #ff5fa2, #7c5cff);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+/* hover pc */
+#musicBtn:hover {
+  transform: scale(1.08) rotate(8deg);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+/* cuando reproduce */
+#musicBtn.playing {
+  animation: latido 1s infinite;
+  background: linear-gradient(135deg, #00c9a7, #00e1ff);
+}
+
+/* celular */
+@media (max-width: 768px) {
+  .music-player {
+    top: 14px;
+    right: 14px;
+  }
+
+  #musicBtn {
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+  }
+}
+
+/* animación */
+@keyframes latido {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
